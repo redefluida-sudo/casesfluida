@@ -1,0 +1,5 @@
+{
+  "name": "cases-fluidas",
+  "private": true,
+  "engines": { "node": ">=18" }
+}

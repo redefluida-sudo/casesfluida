@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfólio de Cases Fluida</title>
+<link rel="icon" href="https://hall-das-fluidas.vercel.app/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Cores iguais ao Hall das Fluidas */
+    --azul: #1AABB0;
+    --azul-esc: #0D6E72;
+    --azul-cl: #F0FAFA;
+    --branco: #FFFFFF;
+    --cinza: #64748B;
+    --borda: #A8DCDF;
+    --display: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --corpo: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--corpo);
+    background: var(--azul-cl);
+    color: var(--azul-esc);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Topo */
+  .topo {
+    background: linear-gradient(135deg, var(--azul-esc) 0%, var(--azul) 100%);
+    color: var(--branco);
+    padding: 56px 24px 88px;
+    position: relative;
+    overflow: hidden;
+  }
+  .topo::after {
+    /* onda na base do topo */
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    height: 48px;
+    background: var(--azul-cl);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 48' preserveAspectRatio='none'%3E%3Cpath d='M0 30 C 200 0 400 0 600 24 C 800 48 1000 48 1200 20 L1200 48 L0 48 Z' fill='black'/%3E%3C/svg%3E") center/100% 100% no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 48' preserveAspectRatio='none'%3E%3Cpath d='M0 30 C 200 0 400 0 600 24 C 800 48 1000 48 1200 20 L1200 48 L0 48 Z' fill='black'/%3E%3C/svg%3E") center/100% 100% no-repeat;
+  }
+  .topo-inner { max-width: 760px; margin: 0 auto; }
+  .logo { height: 44px; width: auto; display: block; margin-bottom: 36px; }
+  h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 7vw, 4.8rem);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    max-width: 12ch;
+  }
+  .intro {
+    margin-top: 20px;
+    max-width: 52ch;
+    font-size: 1.1rem;
+    color: var(--branco);
+    opacity: .88;
+  }
+
+  /* Filtros */
+  .filtros {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 8px 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .busca {
+    width: 100%;
+    max-width: 420px;
+    font: inherit;
+    padding: 12px 16px;
+    border: 1.5px solid var(--borda);
+    border-radius: 999px;
+    background: var(--branco);
+    color: var(--azul-esc);
+  }
+  .busca::placeholder { color: var(--cinza); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1.5px solid var(--borda);
+    background: transparent;
+    color: var(--azul-esc);
+    cursor: pointer;
+  }
+  .chip[aria-pressed="true"] {
+    background: var(--azul);
+    border-color: var(--azul);
+    color: var(--branco);
+  }
+  .busca:focus-visible, .chip:focus-visible, .insta:focus-visible {
+    outline: 3px solid var(--azul);
+    outline-offset: 2px;
+  }
+
+  /* Cases */
+  .cases {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px 72px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .case {
+    background: var(--branco);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--borda);
+  }
+  .foto {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: var(--borda);
+  }
+  .corpo { padding: 24px 24px 22px; }
+  .conquista {
+    font-family: var(--corpo);
+    font-size: 1.08rem;
+    font-weight: 500;
+    line-height: 1.55;
+    white-space: pre-line;
+  }
+  .conquista:empty { display: none; }
+  .quem {
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1.5px solid var(--azul-cl);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .inicial {
+    flex: none;
+    width: 56px; height: 56px;
+    object-fit: cover;
+    border-radius: 50%;
+    background: var(--azul-cl);
+    border: 3px solid var(--azul);
+    color: var(--azul);
+    display: grid; place-items: center;
+    font-weight: 700;
+    font-size: 1.3rem;
+  }
+  .nome { font-weight: 600; line-height: 1.25; }
+  .nichos { font-size: 0.88rem; color: var(--cinza); }
+  .insta {
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--azul);
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--azul-cl);
+  }
+  .insta:hover { background: var(--borda); }
+  .insta svg { width: 16px; height: 16px; }
+
+  .aviso {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px 24px 80px;
+    color: var(--cinza);
+    font-size: 1.05rem;
+  }
+  .aviso button {
+    font: inherit; font-weight: 600;
+    margin-left: 6px;
+    background: none; border: none;
+    color: var(--azul); text-decoration: underline; cursor: pointer;
+  }
+
+  footer {
+    text-align: center;
+    padding: 32px 24px 48px;
+    color: var(--cinza);
+    font-size: 0.9rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cases.entrando { animation: sobe 0.6s ease-out; }
+    @keyframes sobe { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  }
+  @media (max-width: 600px) {
+    .topo { padding: 40px 20px 72px; }
+    .filtros, .cases, .aviso { padding-left: 16px; padding-right: 16px; }
+  }
+  /* Faixa animada */
+  .faixa { background: var(--azul-esc); color: var(--branco); overflow: hidden; padding: 14px 0; }
+  .faixa-trilho { display: flex; width: max-content; animation: correr 40s linear infinite; }
+  .faixa span { white-space: nowrap; font-weight: 600; font-size: 1.02rem; padding-right: 28px; }
+  .faixa span::after { content: '·'; padding-left: 28px; opacity: .7; }
+  @keyframes correr { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .faixa-trilho { animation: none; } }
+
+  /* Diagnóstico gratuito */
+  .diagnostico { background: var(--branco); text-align: center; }
+  .diagnostico h2 { margin: 0 auto; }
+  .diagnostico p { margin: 14px auto 0; max-width: 52ch; color: var(--cinza); font-size: 1.08rem; }
+  .diagnostico .botoes { justify-content: center; }
+  .botao.cheio { background: var(--azul); color: var(--branco); }
+  .botao.cheio:hover { background: var(--azul-esc); }
+
+
+  /* Menu das abas (igual às outras páginas) */
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 48px; }
+  .nav .logo { margin-bottom: 0; }
+  .abas { display: flex; gap: 4px; list-style: none; }
+  .abas a { display: block; text-decoration: none; padding: 8px 16px; border-radius: 999px; font-weight: 600; font-size: .95rem; color: var(--branco); opacity: .88; }
+  .abas a:hover { opacity: 1; background: rgba(255,255,255,.14); }
+  .abas a[aria-current="page"] { opacity: 1; background: var(--branco); color: var(--azul-esc); }
+  .topo-inner { max-width: 760px; }
+  .topo { padding-top: 56px; }
+  .filtros { padding-top: 36px !important; }
+  .topo::after { background: var(--azul) !important; }
+  h1 { font-weight: 800 !important; letter-spacing: -0.035em !important; max-width: 14ch !important; }
+  .faixa { background: var(--azul); padding: 12px 0; }
+  .faixa span { text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; font-weight: 700; }
+  .botao { display: inline-block; text-decoration: none; padding: 13px 24px; border-radius: 999px; font-weight: 700; font-size: 1rem; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+  .botao:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(13,110,114,.25); }
+  .botoes { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .diagnostico { padding: 72px 24px; }
+  .diagnostico h2 { font-family: var(--display); font-weight: 800; letter-spacing: -0.035em; font-size: clamp(1.8rem, 4.4vw, 2.6rem); line-height: 1.15; color: var(--azul-esc); max-width: 22ch; }
+  .diagnostico h2 .destaque { color: var(--azul); }
+  .case { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+  .case:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(13,110,114,.14); border-color: var(--azul); }
+  @media (max-width: 600px) { .nav { flex-direction: column; align-items: flex-start; margin-bottom: 32px; } .abas a { padding: 6px 12px; font-size: .9rem; } }
+</style>
+</head>
+<body>
+  <header class="topo">
+    <div class="topo-inner">
+      <img class="logo" src="https://hall-das-fluidas.vercel.app/logo.png" alt="Rede Fluida">
+      <h1>Portfólio de Cases Fluida</h1>
+      <p class="intro">Conheça a história das nossas mentoradas, mulheres que aplicaram Gestão Feminista em seus negócios e o que elas conquistaram.</p>
+    </div>
+  </header>
+<div class="faixa" aria-label="Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão">
+  <div class="faixa-trilho" aria-hidden="true"><span>Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão</span><span>Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão</span><span>Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão</span><span>Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão</span><span>Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão</span><span>Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão</span><span>Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão</span><span>Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão</span></div>
+</div>
+
+  <section class="filtros" aria-label="Filtrar cases">
+    <input class="busca" type="search" placeholder="Buscar por nome ou conquista" aria-label="Buscar por nome ou conquista">
+    <div class="chips" role="group" aria-label="Filtrar por nicho"></div>
+  </section>
+
+  <p class="aviso" id="aviso">Carregando cases...</p>
+  <main class="cases" id="cases" aria-live="polite"></main>
+
+  <section class="diagnostico">
+    <h2>Como está a <span class="destaque">gestão</span> da sua empresa hoje?</h2>
+    <p>Responda o diagnóstico e descubra onde o seu negócio está perdendo dinheiro, tempo e energia.</p>
+    <div class="botoes">
+      <a class="botao cheio" href="https://diagnostico.redefluida.com/" target="_blank" rel="noopener">Faça o diagnóstico gratuito de gestão da sua empresa</a>
+      <a class="botao" style="box-shadow: inset 0 0 0 2px var(--azul); color: var(--azul-esc);" href="https://wa.me/5561996707607" target="_blank" rel="noopener">Quero ser uma Vênus</a>
+    </div>
+  </section>
+<div class="faixa" aria-label="Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão">
+  <div class="faixa-trilho" aria-hidden="true"><span>Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão</span><span>Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão</span><span>Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão</span><span>Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão</span><span>Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão</span><span>Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão</span><span>Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão</span><span>Nenhuma mulher é livre sem dinheiro, nenhuma empresária é livre sem gestão</span></div>
+</div>
+  <footer>Rede Fluida © <span id="ano"></span></footer>
+
+<script>
+  const $cases = document.getElementById('cases');
+  const $aviso = document.getElementById('aviso');
+  const $chips = document.querySelector('.chips');
+  const $busca = document.querySelector('.busca');
+  document.getElementById('ano').textContent = new Date().getFullYear();
+
+  let todos = [];
+  let nichoAtivo = null;
+
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  function linkInstagram(valor) {
+    if (!valor) return null;
+    const v = valor.trim();
+    if (/^https?:\/\//i.test(v)) return v;
+    const handle = v.replace(/^@/, '').replace(/^(www\.)?instagram\.com\//i, '').replace(/\/$/, '');
+    return handle ? 'https://instagram.com/' + handle : null;
+  }
+
+  const iconeInsta = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>';
+
+  function cardHTML(c) {
+    const insta = linkInstagram(c.instagram);
+    const inicial = esc((c.nome || '?').trim().charAt(0).toUpperCase());
+    return `
+      <article class="case">
+        <div class="corpo">
+          <div class="quem">
+            ${c.foto
+              ? `<img class="inicial" src="${esc(c.foto)}" alt="Foto de ${esc(c.nome)}" loading="lazy">`
+              : `<span class="inicial" aria-hidden="true">${inicial}</span>`}
+            <div>
+              <div class="nome">${esc(c.nome)}</div>
+              ${c.nichos.length ? `<div class="nichos">${c.nichos.map(esc).join(', ')}</div>` : ''}
+            </div>
+          </div>
+          <p class="conquista">${esc(c.conquista)}</p>
+          ${insta ? `<a class="insta" href="${esc(insta)}" target="_blank" rel="noopener">${iconeInsta} Ver Instagram</a>` : ''}
+        </div>
+      </article>`;
+  }
+
+  function render() {
+    const termo = $busca.value.trim().toLowerCase();
+    const lista = todos.filter((c) => {
+      const okNicho = !nichoAtivo || c.nichos.includes(nichoAtivo);
+      const okBusca = !termo || (c.nome + ' ' + c.conquista).toLowerCase().includes(termo);
+      return okNicho && okBusca;
+    });
+    $cases.innerHTML = lista.map(cardHTML).join('');
+    if (!lista.length) {
+      $aviso.hidden = false;
+      $aviso.textContent = 'Nenhum case encontrado com esse filtro. Tente outro nicho ou limpe a busca.';
+    } else {
+      $aviso.hidden = true;
+    }
+  }
+
+  function montarChips() {
+    const nichos = [...new Set(todos.flatMap((c) => c.nichos))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+    const botoes = [{ nome: 'Todos', valor: null }, ...nichos.map((n) => ({ nome: n, valor: n }))];
+    $chips.innerHTML = '';
+    botoes.forEach((b) => {
+      const el = document.createElement('button');
+      el.className = 'chip';
+      el.type = 'button';
+      el.textContent = b.nome;
+      el.setAttribute('aria-pressed', String(b.valor === nichoAtivo));
+      el.addEventListener('click', () => {
+        nichoAtivo = b.valor;
+        $chips.querySelectorAll('.chip').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+        el.setAttribute('aria-pressed', 'true');
+        render();
+      });
+      $chips.appendChild(el);
+    });
+  }
+
+  async function carregar() {
+    $aviso.hidden = false;
+    $aviso.textContent = 'Carregando cases...';
+    try {
+      const res = await fetch('/api/cases');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || res.status);
+      todos = data.cases || [];
+      montarChips();
+      render();
+      $cases.classList.add('entrando');
+    } catch (e) {
+      console.error(e);
+      $aviso.innerHTML = 'Os cases não carregaram. Verifique a conexão e <button type="button">tente de novo</button>';
+      $aviso.querySelector('button').addEventListener('click', carregar);
+    }
+  }
+
+  $busca.addEventListener('input', render);
+  carregar();
+</script>
+</body>
+</html>
