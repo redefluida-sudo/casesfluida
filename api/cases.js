@@ -40,10 +40,24 @@ function fileUrl(f) {
   return null;
 }
 
-// A foto é o ÍCONE da página (igual ao Hall das Fluidas).
-// Coloque a foto de perfil do Instagram dela como ícone da página no Notion.
-function findPhoto(page) {
-  if (page.icon && page.icon.type !== 'emoji') return fileUrl(page.icon);
+// Ordem de busca da foto:
+// 1) ícone da página (foto de perfil do Instagram, igual ao Hall das Fluidas)
+// 2) capa da página
+// 3) primeira imagem dentro do conteúdo da página
+async function findPhoto(page) {
+  const icon = page.icon;
+  if (icon) {
+    if (icon.type === 'file' || icon.type === 'external') return fileUrl(icon);
+    if (icon.type === 'custom_emoji' && icon.custom_emoji && icon.custom_emoji.url) return icon.custom_emoji.url;
+  }
+  if (page.cover) return fileUrl(page.cover);
+  try {
+    const children = await notion(`/blocks/${page.id}/children?page_size=30`);
+    const img = children.results.find((b) => b.type === 'image');
+    if (img) return fileUrl(img.image);
+  } catch (e) {
+    // sem foto: a página mostra a inicial do nome
+  }
   return null;
 }
 
@@ -85,11 +99,16 @@ module.exports = async (req, res) => {
   try {
     const pages = await fetchAllPages();
     const cases = [];
-    for (const page of pages) {
-      const item = readProps(page);
-      if (!item.nome) continue;
-      item.foto = findPhoto(page);
-      cases.push(item);
+    // Busca as fotos em lotes pequenos para respeitar o limite da API do Notion
+    for (let i = 0; i < pages.length; i += 3) {
+      const lote = pages.slice(i, i + 3);
+      const itens = await Promise.all(lote.map(async (page) => {
+        const item = readProps(page);
+        if (!item.nome) return null;
+        item.foto = await findPhoto(page);
+        return item;
+      }));
+      cases.push(...itens.filter(Boolean));
     }
     // Cache curto: mudanças no Notion aparecem em até ~1 minuto.
     // (Os links de imagem do Notion expiram em 1h, então o cache nunca passa disso.)
