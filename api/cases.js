@@ -69,6 +69,7 @@ function readProps(page) {
     conquista: plain(p['O que ela conquistou']?.rich_text),
     nichos: (p['Nicho']?.multi_select || []).map((o) => o.name),
     instagram: p['Instagram']?.url || null,
+    estudo: p['Estudo de caso']?.url || null,
   };
 }
 
