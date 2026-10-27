@@ -246,6 +246,20 @@
   .case { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
   .case:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(13,110,114,.14); border-color: var(--azul); }
   @media (max-width: 600px) { .nav { flex-direction: column; align-items: flex-start; margin-bottom: 32px; } .abas a { padding: 6px 12px; font-size: .9rem; } }
+
+  /* Botões do card */
+  .acoes { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .acoes .insta { margin-top: 0; }
+  .estudo {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-weight: 600; font-size: 0.92rem; text-decoration: none;
+    color: var(--branco); background: var(--azul);
+    padding: 8px 16px; border-radius: 999px;
+    transition: background .2s ease, transform .2s ease;
+  }
+  .estudo:hover { background: var(--azul-esc); transform: translateY(-2px); }
+  .estudo:focus-visible { outline: 3px solid var(--azul); outline-offset: 2px; }
+  .estudo svg { width: 14px; height: 14px; }
 </style>
 </head>
 <body>
@@ -304,6 +318,8 @@
 
   const iconeInsta = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>';
 
+  const iconePlay = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>';
+
   function cardHTML(c) {
     const insta = linkInstagram(c.instagram);
     const inicial = esc((c.nome || '?').trim().charAt(0).toUpperCase());
@@ -320,7 +336,10 @@
             </div>
           </div>
           <p class="conquista">${esc(c.conquista)}</p>
-          ${insta ? `<a class="insta" href="${esc(insta)}" target="_blank" rel="noopener">${iconeInsta} Ver Instagram</a>` : ''}
+          ${(insta || c.estudo) ? `<div class="acoes">
+            ${c.estudo ? `<a class="estudo" href="${esc(c.estudo)}" target="_blank" rel="noopener">${iconePlay} Assistir estudo de caso</a>` : ''}
+            ${insta ? `<a class="insta" href="${esc(insta)}" target="_blank" rel="noopener">${iconeInsta} Ver Instagram</a>` : ''}
+          </div>` : ''}
         </div>
       </article>`;
   }
